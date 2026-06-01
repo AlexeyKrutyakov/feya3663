@@ -29,8 +29,8 @@
 ## Коммиты
 
 - **Conventional Commits**, через skill `/commit`. Формат: `type(scope): summary` (на английском).
-- Примеры: `feat(api): import visits from MIS`, `fix(web): timezone in appointment card`.
-- Тело коммита — по необходимости (что и зачем).
+- **Коротко: по умолчанию одна строка, без тела.** Тело добавляем только если «зачем» неочевидно (нетривиальный компромисс, обход бага). Большинству коммитов тело не нужно.
+- Примеры: `feat(api): import visits from MIS`, `fix(web): timezone in appointment card`, `docs: record integration coordinates`.
 
 ## Цикл работы
 

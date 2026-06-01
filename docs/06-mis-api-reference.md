@@ -92,7 +92,7 @@
 - `GET /api/v2/payments` — платежи (вне scope).
 
 ### Вебхуки
-- `POST /api/v2/hook_settings` — задать URL’ы `{ "urls": ["https://наш-домен/webhooks/mis"] }`.
+- `POST /api/v2/hook_settings` — задать URL’ы `{ "urls": ["https://api.feya3663.ru/webhooks/mis"] }`.
 - `PATCH /api/v2/hook_settings` — обновить.
 - `DELETE /api/v2/hook_settings` — удалить.
 
