@@ -10,6 +10,7 @@
 ## Конвенции
 - **Язык:** документы (`docs/`, этот файл) — на русском. **Код, имена сущностей, комментарии, коммиты** — на английском.
 - **Коммиты:** через skill `/commit` (Conventional Commits). **По умолчанию одна короткая строка, без тела.**
+- **Без подписей-генераторов:** в коммиты, тела PR и комментарии **не добавлять** строки вида «Сгенерировано при помощи Claude Code», `🤖 Generated with Claude Code`, `Co-Authored-By: Claude`/`Co-authored-by` и подобные трейлеры.
 - **Git-процесс:** ветки `<type>/<slug>` (feat/fix/docs/chore/…), одна сессия = одна ветка = один PR, **squash-merge в `main`**. Подробно — `docs/08-git-workflow.md`. В `main` напрямую не коммитим.
 - **Стек (ADR-001):** full-TypeScript — Next.js + Tailwind + React Three Fiber (web); NestJS + Prisma + PostgreSQL (api); Redis + BullMQ; REST + OpenAPI; монорепо pnpm + Turborepo. Хостинг Beget (РФ), Docker/Ubuntu, CI/CD GitHub Actions.
 
