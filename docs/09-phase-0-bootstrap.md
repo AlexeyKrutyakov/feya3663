@@ -60,10 +60,11 @@ packages/
 - **DoD:** `pnpm install` и `pnpm turbo run lint typecheck` проходят. ✅
 - _Версии (2026-06-17): turbo 2.9.18, TS 6.0.3, ESLint 10.5.0, typescript-eslint 8.61.1, prettier 3.8.4._
 
-### 0.2 packages/shared (`@feya/shared`)
-- [ ] Пакет с `tsup` (ESM+CJS, d.ts). Экспорт: Zod-схема env (`apiEnvSchema`) + пример общего DTO/типа.
-- [ ] Smoke-тест (Vitest) на схему env.
-- **DoD:** и `api`, и `web` импортируют тип/схему из `@feya/shared`.
+### 0.2 packages/shared (`@feya/shared`) ✅
+- [x] Пакет с `tsup` (ESM+CJS, d.ts). Экспорт: Zod-схема env (`apiEnvSchema`) + пример общего DTO/типа.
+- [x] Smoke-тест (Vitest) на схему env.
+- **DoD:** и `api`, и `web` импортируют тип/схему из `@feya/shared`. ✅ (проверяется в 0.3/0.4)
+- _Версии (2026-06-17): Zod 4.4.3, tsup 8.5.1, Vitest 4.1.9, TS понижен до 5.9.3 (TS6 несовместим с tsup DTS)._
 
 ### 0.3 apps/api (NestJS + Prisma)
 - [ ] Каркас Nest; `AppModule`, `HealthModule`.
