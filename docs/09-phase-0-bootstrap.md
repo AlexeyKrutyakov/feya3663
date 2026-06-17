@@ -66,14 +66,15 @@ packages/
 - **DoD:** и `api`, и `web` импортируют тип/схему из `@feya/shared`. ✅ (проверяется в 0.3/0.4)
 - _Версии (2026-06-17): Zod 4.4.3, tsup 8.5.1, Vitest 4.1.9, TS понижен до 5.9.3 (TS6 несовместим с tsup DTS)._
 
-### 0.3 apps/api (NestJS + Prisma)
-- [ ] Каркас Nest; `AppModule`, `HealthModule`.
-- [ ] `ConfigModule` с валидацией env через Zod из `@feya/shared`.
-- [ ] Prisma: `prisma init` (PostgreSQL через `DATABASE_URL`), baseline-миграция без моделей.
-- [ ] `GET /health` — статус + проверка БД (`$queryRaw SELECT 1`).
-- [ ] Swagger на `/docs` (`@nestjs/swagger`).
-- [ ] `Dockerfile` (multi-stage, `node:22-bookworm-slim`; `prisma generate` на build).
-- **DoD:** `/health` отвечает локально и в Docker; `/docs` открывается.
+### 0.3 apps/api (NestJS + Prisma) ✅
+- [x] Каркас Nest; `AppModule`, `HealthModule`.
+- [x] `ConfigModule` с валидацией env через Zod из `@feya/shared`.
+- [x] Prisma: schema.prisma (PostgreSQL, `DATABASE_URL`), migrations/ создан.
+- [x] `GET /health` — статус + проверка БД (`$queryRaw SELECT 1`).
+- [x] Swagger на `/docs` (`@nestjs/swagger`).
+- [x] `Dockerfile` (multi-stage, `node:22-bookworm-slim`; `prisma generate` на build).
+- **DoD:** typecheck + build зелёные ✅; runtime (DB) — проверяется в 0.5.
+- _Версии (2026-06-17): NestJS 11.1.27, Prisma 6.19.3 (v7 пропускаем — breaking changes в config). TS 5.9.3._
 
 ### 0.4 apps/web (Next.js, минимальный)
 - [ ] `create-next-app` (App Router, TS, Tailwind, ESLint).
