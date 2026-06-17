@@ -52,12 +52,13 @@ packages/
 
 ## Прогресс по шагам
 
-### 0.1 Каркас и инструменты
-- [ ] Корневой `package.json` (private, `packageManager: pnpm@9.4.0`, скрипты-обёртки над `turbo`).
-- [ ] `pnpm-workspace.yaml` (`apps/*`, `packages/*`), `turbo.json` (build/lint/test/typecheck/dev).
-- [ ] `tsconfig.base.json` — `strict: true`, базовые `compilerOptions`/paths.
-- [ ] Общий ESLint (`@typescript-eslint`) + Prettier + `.editorconfig` + `.nvmrc`.
-- **DoD:** `pnpm install` и `pnpm turbo run lint typecheck` проходят.
+### 0.1 Каркас и инструменты ✅
+- [x] Корневой `package.json` (private, `packageManager: pnpm@9.4.0`, скрипты-обёртки над `turbo`).
+- [x] `pnpm-workspace.yaml` (`apps/*`, `packages/*`), `turbo.json` (build/lint/test/typecheck/dev).
+- [x] `tsconfig.base.json` — `strict: true`, базовые `compilerOptions`/paths.
+- [x] Общий ESLint (`@typescript-eslint`) + Prettier + `.editorconfig` + `.nvmrc`.
+- **DoD:** `pnpm install` и `pnpm turbo run lint typecheck` проходят. ✅
+- _Версии (2026-06-17): turbo 2.9.18, TS 6.0.3, ESLint 10.5.0, typescript-eslint 8.61.1, prettier 3.8.4._
 
 ### 0.2 packages/shared (`@feya/shared`)
 - [ ] Пакет с `tsup` (ESM+CJS, d.ts). Экспорт: Zod-схема env (`apiEnvSchema`) + пример общего DTO/типа.
