@@ -22,8 +22,9 @@ Node 23.3.0 (локально) · pnpm 9.4.0 (corepack) · npm 11 · Docker 29 +
 
 - **Корень монорепо = корень git-репозитория** (`D:\programming\feya3663`). В `docs/07` структура
   показана как `feya/…` — это и есть наш корень; отдельной вложенной папки не создаём.
-- **Node для Docker/CI — 22 LTS** (воспроизводимость): `.nvmrc`=`22`, базовый образ
-  `node:22-bookworm-slim`, в CI `node-version: 22`. Локально Node 23 совместим.
+- **Node — 24 LTS везде** (D27, воспроизводимость): `.nvmrc`=`24`, образ `node:24-bookworm-slim`,
+  CI `node-version: 24`. ⚠️ **Node 23 НЕсовместим с Prisma 7** (нужен `20.19+/22.12+/24.0+`); выбран
+  24 (Active LTS, поддержка до ~2028) вместо ранее запиненного 22. Прежние заметки про Node 22/23 — устарели.
 - **pnpm** через corepack, пин `packageManager: "pnpm@9.4.0"` в корневом `package.json`.
 - **husky/commitlint (0.1 опц.) — пропускаем** (коммитим через `/commit`); вернёмся при необходимости.
 - **Тесты:** Vitest (unit) — по одному smoke-тесту в api/web/shared. Playwright (e2e) — позже, в UI-фазе.
@@ -72,9 +73,9 @@ packages/
 - [x] Prisma: schema.prisma (PostgreSQL, `DATABASE_URL`), migrations/ создан.
 - [x] `GET /health` — статус + проверка БД (`$queryRaw SELECT 1`).
 - [x] Swagger на `/docs` (`@nestjs/swagger`).
-- [x] `Dockerfile` (multi-stage, `node:22-bookworm-slim`; `prisma generate` на build).
+- [x] `Dockerfile` (multi-stage, `node:24-bookworm-slim`; собирает `@feya/db` перед api).
 - **DoD:** typecheck + build зелёные ✅; runtime (DB) — проверяется в 0.5.
-- _Версии (2026-06-17): NestJS 11.1.27, Prisma 6.19.3 (v7 пропускаем — breaking changes в config). TS 5.9.3._
+- _Версии (2026-06-17): NestJS 11.1.27, **Prisma 7.8.0** (вынесена в `@feya/db`, D27). TS 5.9.3._
 
 ### 0.4 apps/web (Next.js, минимальный)
 - [ ] `create-next-app` (App Router, TS, Tailwind, ESLint).
@@ -101,6 +102,39 @@ packages/
 ### Завершение
 - [ ] Отметить выполненные пункты в `docs/07-tasks-phase-0-1.md` и обновить «Текущий фокус» в `docs/00-README.md`.
 - [ ] Push ветки → PR в `main` → зелёный CI → squash-merge.
+
+## Resume: миграция на Prisma 7 + вынос в `packages/db` (✅ ЗАВЕРШЕНО 2026-06-17, D27)
+
+> Выполнено на **Node 24.16.0** (Prisma 7 несовместима с Node 23). Все шаги чек-листа ниже
+> закрыты; `pnpm turbo run lint typecheck test build` — зелено (9 задач). Осталась только
+> end-to-end проверка с живой БД (`docker compose up`) — относится к шагу 0.5.
+
+**Что уже сделано (закоммичено до 0.3 + lint-fix):** шаги 0.1–0.3 на Prisma **6** в `apps/api/prisma`.
+**Что в рабочем дереве (НЕ закоммичено):** скелет `packages/db/` — `package.json` (`@feya/db`,
+Prisma 7.8.0, `@prisma/adapter-pg`, `pg`, `dotenv`), `prisma/schema.prisma` (generator
+`prisma-client` + `output ../src/generated/prisma`, datasource без `url`), `prisma.config.ts`
+(datasource url из env), `prisma/migrations/.gitkeep`. `pnpm install` ещё **не прошёл** (упал на Node 23).
+
+**Чек-лист продолжения:**
+1. Node 24 активен → `pnpm install` (теперь пройдёт).
+2. `pnpm --filter @feya/db db:generate` → осмотреть `packages/db/src/generated/prisma/` (точка входа
+   клиента, обычно `client.ts`), подтвердить, что `tsc` соберёт.
+3. `packages/db/tsconfig.json` + `tsconfig.build.json` (module CommonJS для Nest-консьюмера).
+4. `packages/db/src/index.ts`: ре-экспорт `PrismaClient` из `./generated/prisma/client` +
+   `export function createPgAdapter(connectionString) { return new PrismaPg({ connectionString }); }`.
+5. `pnpm --filter @feya/db build` → проверить `dist` + `.d.ts`.
+6. **apps/api:** в `package.json` убрать `@prisma/client`/`prisma`, добавить `@feya/db: workspace:*`;
+   удалить `apps/api/prisma/`; `prisma.service.ts` → `extends PrismaClient`, конструктор инжектит
+   `ConfigService`, `super({ adapter: createPgAdapter(config.get('DATABASE_URL')) })`.
+7. **Dockerfile (api):** база `node:24-bookworm-slim`; собирать `@feya/db` (generate+build) перед api;
+   копировать `db/dist`; prod-зависимости включают `@prisma/adapter-pg`, `pg` (Rust-free клиент v7 — бинарь движка не нужен).
+8. `.gitignore`: добавить `**/src/generated/` (генерируемый клиент не в git).
+9. `turbo.json`: `globalEnv: ["DATABASE_URL"]` + задачи `db:generate`/`db:migrate`/`db:deploy` (`cache:false`).
+10. `pnpm turbo run lint typecheck build` — зелено; обновить чек-боксы 0.3 (пометка про Prisma 7).
+11. Коммит через `/commit` (напр. `refactor(db): move prisma to packages/db on prisma 7`).
+
+**Под-вопрос Node 22 vs 24 — решён: Node 24 LTS** (D27). `.nvmrc` и Dockerfile уже обновлены на 24;
+CI (шаг 0.6) писать сразу с `node-version: 24`.
 
 ## Verification (end-to-end)
 
