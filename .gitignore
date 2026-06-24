@@ -43,3 +43,6 @@ Thumbs.db
 # Misc temp
 .tmp*
 tmp/
+
+# Binary / design assets (source of truth is Figma; local .fig kept in tmp/)
+*.fig
