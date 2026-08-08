@@ -138,7 +138,7 @@ GitHub Actions (`.github/workflows/ci.yml`):
 | Файл | Содержание |
 |------|-----------|
 | `docs/00-README.md` | Навигация по документам, текущий фокус |
-| `docs/03-architecture.md` | Архитектура и ADR |
-| `docs/04-roadmap.md` | Фазы и план |
-| `docs/06-mis-api-reference.md` | API МИС (Arnica/SQNS) |
-| `docs/10-phase-0-bootstrap.md` | Прогресс Фазы 0 |
+| `docs/04-architecture.md` | Архитектура и ADR |
+| `docs/05-roadmap.md` | Фазы и план |
+| `docs/10-mis-api-reference.md` | API МИС (Arnica/SQNS) |
+| `docs/09-phase-0-bootstrap.md` | Прогресс Фазы 0 |
