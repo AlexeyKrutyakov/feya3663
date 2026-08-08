@@ -138,6 +138,17 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
   `feya3663@yandex.ru` password — only in local `.env` (gitignored) and
   GitHub Actions Secrets. Clinic credentials / support drafts live in `tmp/`
   (gitignored). `docs/` and commits must stay secret-free.
+- **Where secrets live (split by scope):**
+  - **App secrets** (`DATABASE_URL`, `REDIS_URL`, MIS `ApiKey`, SMTP tokens,
+    JWT secrets) — local `.env` at the repo root, gitignored. Runtime code reads
+    them via `process.env.*` (validated by the Zod schema in `@feya/shared`).
+    In CI, the same names come from GitHub Actions Secrets. Never hardcode.
+  - **ZCode tool secrets** (MCP server API keys like `context7`, third-party
+    integration tokens) — `~/.zcode/cli/config.json` under
+    `mcp.servers.<name>.headers`, **not** in `.env`. `.env` feeds the app
+    runtime; ZCode's MCP layer is separate and reads its own config. Workspace
+    `.zcode/config.json` stays secret-free (`mcp.servers: {}`) — anything with a
+    key goes to the user-scope file so it never risks a commit.
 
 ## Read before touching sensitive areas
 
