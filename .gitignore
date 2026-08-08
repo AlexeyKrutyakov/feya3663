@@ -20,6 +20,8 @@ out/
 # Prisma
 prisma/*.db
 prisma/*.db-journal
+# Generated Prisma Client (regenerated via `prisma generate`)
+**/src/generated/
 
 # Logs
 logs/
