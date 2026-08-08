@@ -11,12 +11,12 @@ admins manage appointments with write-back to MIS via API.
 
 Stack: Next.js 15 (web) · NestJS 11 (api) · PostgreSQL 16 · Redis 7 ·
 pnpm 9 + Turborepo · full TypeScript 5.9. Hosting: Beget (RU), Docker/Ubuntu,
-GitHub Actions. See `docs/03-architecture.md` (ADR-001) for rationale.
+GitHub Actions. See `docs/04-architecture.md` (ADR-001) for rationale.
 
 ## Session entry point
 
 1. `docs/00-README.md` — "Текущий фокус / следующий шаг" (current focus).
-2. `docs/05-open-questions.md` — decisions journal (D1–D27) + open questions.
+2. `docs/01-open-questions.md` — decisions journal (D1–D27) + open questions.
    **Fastest way to get context.**
 3. Then the relevant `docs/` file (brief, requirements, architecture, roadmap,
    MIS API reference, phase tasks, git workflow).
@@ -102,8 +102,8 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
   name it after the branch slug (e.g. `feat/mis-visit-sync`). This matches the git
   flow above and keeps context clean.
 - **Persistent state lives in `docs/`, not chats.** Progress checkboxes
-  (`docs/10-phase-0-bootstrap.md`, `docs/07-tasks-phase-0-1.md`), the "Текущий фокус"
-  block in `docs/00-README.md`, and decisions in `docs/05-open-questions.md` are the
+  (`docs/09-phase-0-bootstrap.md`, `docs/06-tasks-phase-0-1.md`), the "Текущий фокус"
+  block in `docs/00-README.md`, and decisions in `docs/01-open-questions.md` are the
   source of truth across sessions. Every new chat reads these on entry (per the
   session entry point above) — a new chat is cheap because state is externalized.
 - **Continue a chat only for the same task/branch** (e.g. addressing PR review
@@ -111,7 +111,7 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
   Do not keep a single "eternal" chat — it pollutes context and loses early details
   to summarization.
 - **Before closing a chat, persist any decision made only in it.** If a decision,
-  rationale, or design note isn't yet in `docs/05` (decisions) or `docs/07`/`docs/09`
+  rationale, or design note isn't yet in `docs/01` (decisions) or `docs/06`/`docs/09`
   (progress), write it there first. A decision not in `docs/` effectively doesn't
   exist for the next session.
 - **Chats are disposable after merge.** Once the branch is squash-merged and the
@@ -152,10 +152,10 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
 
 ## Read before touching sensitive areas
 
-- MIS integration / `ApiKey` / webhooks → `docs/06-mis-api-reference.md`,
-  `docs/06a-sqns-support-2026-06.md` (no test sandbox — test against live API;
+- MIS integration / `ApiKey` / webhooks → `docs/10-mis-api-reference.md`,
+  `docs/11-sqns-support-2026-06.md` (no test sandbox — test against live API;
   webhooks have no retries/signature → pull-reconciliation via `modificate` is
   mandatory; clinic TZ GMT+3; notifications via Max not SMS, D26).
-- Architecture / stack choices → `docs/03-architecture.md` (ADR-001), D27 in
-  `docs/05-open-questions.md` (Prisma 7).
-- Git/PR process → `docs/08-git-workflow.md`.
+- Architecture / stack choices → `docs/04-architecture.md` (ADR-001), D27 in
+  `docs/01-open-questions.md` (Prisma 7).
+- Git/PR process → `docs/07-git-workflow.md`.

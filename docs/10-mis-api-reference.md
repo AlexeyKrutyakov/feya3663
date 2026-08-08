@@ -1,6 +1,6 @@
-# 06 — Справочник API MIS (CRM Exchange API)
+# 10 — Справочник API MIS (CRM Exchange API)
 
-> Источник: **живой swagger** `https://crmexchange.1denta.ru/docs/swagger` (spec v2.1.0) + **ответы техподдержки SQNS от 2026-06-15** (полный текст — `06a-sqns-support-2026-06.md`). Имена полей/эндпоинтов — как в API (EN). Статус: 🟡 актуализирован по ответам техподдержки.
+> Источник: **живой swagger** `https://crmexchange.1denta.ru/docs/swagger` (spec v2.1.0) + **ответы техподдержки SQNS от 2026-06-15** (полный текст — `11-sqns-support-2026-06.md`). Имена полей/эндпоинтов — как в API (EN). Статус: 🟡 актуализирован по ответам техподдержки.
 > Назначение: рабочая шпаргалка по интеграции. Источник истины по записям — **MIS**, наше приложение — клиент.
 > Платформа: разработчик — **SQNS** (sqns.ru); продукт продаётся под брендами `arnica | denta | clinica`. Наш доступ — через бренд **Arnica Dental**, API хостится на `1denta.ru` (продукт `denta`).
 
@@ -131,7 +131,7 @@
 
 **`resourceData`:** `id, title, description, image, rating`
 
-**`visitForm`** (создание): `{ visit: { user{name,phone,email}, comment?, appointment{serviceIds[], resourceId, datetime} } }`. Реальные curl/JSON — в `06a-sqns-support-2026-06.md` §3.5/§5.1.
+**`visitForm`** (создание): `{ visit: { user{name,phone,email}, comment?, appointment{serviceIds[], resourceId, datetime} } }`. Реальные curl/JSON — в `11-sqns-support-2026-06.md` §3.5/§5.1.
 
 ## Вебхуки (синхронизация в реальном времени)
 
