@@ -1,0 +1,9 @@
+{
+  "$schema": "https://zcode.dev/schema/config.json",
+  "mcp": {
+    "servers": {}
+  },
+  "hooks": {
+    "enabled": false
+  }
+}
