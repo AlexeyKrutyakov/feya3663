@@ -102,7 +102,7 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
   name it after the branch slug (e.g. `feat/mis-visit-sync`). This matches the git
   flow above and keeps context clean.
 - **Persistent state lives in `docs/`, not chats.** Progress checkboxes
-  (`docs/09-phase-0-bootstrap.md`, `docs/07-tasks-phase-0-1.md`), the "Текущий фокус"
+  (`docs/10-phase-0-bootstrap.md`, `docs/07-tasks-phase-0-1.md`), the "Текущий фокус"
   block in `docs/00-README.md`, and decisions in `docs/05-open-questions.md` are the
   source of truth across sessions. Every new chat reads these on entry (per the
   session entry point above) — a new chat is cheap because state is externalized.

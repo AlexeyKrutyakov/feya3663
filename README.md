@@ -141,4 +141,4 @@ GitHub Actions (`.github/workflows/ci.yml`):
 | `docs/03-architecture.md` | Архитектура и ADR |
 | `docs/04-roadmap.md` | Фазы и план |
 | `docs/06-mis-api-reference.md` | API МИС (Arnica/SQNS) |
-| `docs/09-phase-0-bootstrap.md` | Прогресс Фазы 0 |
+| `docs/10-phase-0-bootstrap.md` | Прогресс Фазы 0 |
