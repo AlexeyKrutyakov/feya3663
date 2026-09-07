@@ -27,25 +27,28 @@ feya/                         # корень, git-репозиторий
 
 ## Фаза 0 — Фундамент
 
-### 0.1 Репозиторий и инструменты
-- [ ] `pnpm init`, `pnpm-workspace.yaml` (`apps/*`, `packages/*`), `turbo.json`.
-- [ ] `tsconfig.base.json` (strict), общий ESLint + Prettier, `.editorconfig`, `.gitignore`.
-- [ ] (Опц.) `commitlint` + `husky` — соответствие Conventional Commits (мы коммитим через `/commit`).
-- **DoD:** `pnpm install` и `pnpm turbo run lint typecheck` проходят на пустых пакетах.
+### 0.1 Репозиторий и инструменты ✅ (PR #10, main)
+- [x] `pnpm init`, `pnpm-workspace.yaml` (`apps/*`, `packages/*`), `turbo.json`.
+- [x] `tsconfig.base.json` (strict, `noUncheckedIndexedAccess`), общий ESLint (flat config) + Prettier, `.editorconfig`, `.gitignore`.
+- [x] (Опц.) `commitlint` + `husky` — пропущено (коммитим через `/commit`).
+- **DoD:** `pnpm install` и `pnpm turbo run lint typecheck` проходят. ✅
+- _Версии: turbo 2.9.18, TS 5.9.3, ESLint 9.x flat config._
 
-### 0.2 packages/shared
-- [ ] Пакет `@feya/shared`: сборка (`tsup`), экспорт первых Zod-схем (env, общие DTO).
-- [ ] Пример общего типа, импортируемого и в `api`, и в `web`.
-- **DoD:** оба приложения импортируют тип из `@feya/shared`.
+### 0.2 packages/shared (`@feya/shared`) ✅ (PR #10, main)
+- [x] Пакет `@feya/shared`: сборка `tsup` (ESM+CJS, d.ts); Zod-схема env (`apiEnvSchema`).
+- [x] Smoke-тест (Vitest) на схему env; общий тип импортируется из `api` (web — в 0.4).
+- **DoD:** `api` импортирует тип/схему из `@feya/shared`. ✅ (web — после 0.4)
+- _Версии: Zod 4.4.3, tsup 8.5.1._
 
-### 0.3 apps/api (NestJS)
-- [ ] `nest new` в `apps/api`; модульная структура (`AppModule`, `HealthModule`).
-- [ ] `ConfigModule` с валидацией env через Zod (из `shared`).
-- [ ] Prisma: `prisma init`, подключение к PostgreSQL, первая миграция (пустая/health).
-- [ ] Эндпоинт `GET /health` (проверка БД).
-- [ ] Swagger/OpenAPI подключён (`/docs`).
-- [ ] `Dockerfile` (multi-stage, Ubuntu/node).
-- **DoD:** `/health` отвечает локально и в Docker; `/docs` открывается.
+### 0.3 apps/api (NestJS + Prisma) ✅ (PR #10, main)
+- [x] Каркас Nest (`AppModule`, `HealthModule`).
+- [x] `ConfigModule` с валидацией env через Zod из `@feya/shared`.
+- [x] Prisma вынесена в `@feya/db` (D27): `prisma-client` generator + `createPgAdapter()`; миграция baseline.
+- [x] `GET /health` — статус + проверка БД (`$queryRaw SELECT 1`).
+- [x] Swagger на `/docs` (`@nestjs/swagger`).
+- [x] `Dockerfile` (multi-stage, `node:24-bookworm-slim`; собирает `@feya/db` перед api).
+- **DoD:** typecheck + build зелёные ✅; runtime (живая БД) — проверяется в 0.5.
+- _Версии: NestJS 11.1.27, Prisma 7.8.0 (в `@feya/db`). Node 24 LTS._
 
 ### 0.4 apps/web (Next.js)
 - [ ] `create-next-app` (App Router, TS, Tailwind) в `apps/web`.
