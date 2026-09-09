@@ -81,7 +81,9 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
 ## Conventions
 
 - **Language:** docs (incl. `CLAUDE.md`, `docs/`) are **Russian**; code,
-  identifiers, comments, commits are **English**.
+  identifiers, comments, commits are **English**. **Chat with the project owner
+  (user-facing replies) is always Russian; agents always think/reason in
+  English** (internal reasoning is most reliable in English).
 - **Commits:** use the `/commit` skill → Conventional Commits. Default is a
   single short subject line, no body. Type/scope examples from history:
   `feat(api):`, `feat(shared):`, `refactor(db):`, `fix(lint):`, `chore:`,
