@@ -1,9 +1,9 @@
 import type { Paginated } from '@feya/shared';
 
-const DEFAULT_API_URL = 'http://localhost:3001';
+import { getWebEnv } from './env.js';
 
 export function apiUrl(path: string): string {
-  const base = process.env.NEXT_PUBLIC_API_URL ?? DEFAULT_API_URL;
+  const base = getWebEnv().NEXT_PUBLIC_API_URL;
   return `${base.replace(/\/+$/, '')}/${path.replace(/^\/+/, '')}`;
 }
 

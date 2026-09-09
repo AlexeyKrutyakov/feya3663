@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { apiEnvSchema } from '@feya/shared';
@@ -8,6 +9,8 @@ import { HealthModule } from './health/health.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      // Monorepo root .env (same file docker-compose.yml and prisma.config.ts read).
+      envFilePath: resolve(__dirname, '../../../.env'),
       validate: (config) => {
         const result = apiEnvSchema.safeParse(config);
         if (!result.success) throw new Error(result.error.message);

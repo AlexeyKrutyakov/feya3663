@@ -80,6 +80,8 @@ packages/
 ### 0.4 apps/web (Next.js, минимальный) ✅ (2026-09-09)
 - [x] `create-next-app` (App Router, TS, Tailwind, ESLint).
 - [x] Базовый layout + тема Tailwind + страница-заглушка; обёртка fetch-клиента (`NEXT_PUBLIC_API_URL`).
+- [x] Zod-схема публичных env web (`webEnvSchema`, локально в `apps/web/src/lib/env.ts`
+      — нужна только web; `apiUrl()` ходит через валидированный конфиг) + unit-тесты (#16).
 - [x] `next.config` `output: 'standalone'`; `Dockerfile` (multi-stage, standalone).
 - **DoD:** стартовая страница рендерится локально и в Docker. ✅
 - _Версии: Next 15.5.25, React 19.1, Tailwind v4. `output: 'standalone'` включается
