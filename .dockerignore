@@ -1,0 +1,14 @@
+# Never copy host build output or deps into images (breaks pnpm symlinks in Linux).
+**/node_modules
+**/dist
+**/.next
+**/.turbo
+**/src/generated
+**/coverage
+**/*.tsbuildinfo
+.git
+.env
+.env.*
+!.env.example
+tmp
+docs

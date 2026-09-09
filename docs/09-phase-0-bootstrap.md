@@ -77,11 +77,16 @@ packages/
 - **DoD:** typecheck + build зелёные ✅; runtime (DB) — проверяется в 0.5.
 - _Версии (2026-06-17): NestJS 11.1.27, **Prisma 7.8.0** (вынесена в `@feya/db`, D27). TS 5.9.3._
 
-### 0.4 apps/web (Next.js, минимальный)
-- [ ] `create-next-app` (App Router, TS, Tailwind, ESLint).
-- [ ] Базовый layout + тема Tailwind + страница-заглушка; обёртка fetch-клиента (`NEXT_PUBLIC_API_URL`).
-- [ ] `next.config` `output: 'standalone'`; `Dockerfile` (multi-stage, standalone).
-- **DoD:** стартовая страница рендерится локально и в Docker.
+### 0.4 apps/web (Next.js, минимальный) ✅ (2026-09-09)
+- [x] `create-next-app` (App Router, TS, Tailwind, ESLint).
+- [x] Базовый layout + тема Tailwind + страница-заглушка; обёртка fetch-клиента (`NEXT_PUBLIC_API_URL`).
+- [x] `next.config` `output: 'standalone'`; `Dockerfile` (multi-stage, standalone).
+- **DoD:** стартовая страница рендерится локально и в Docker. ✅
+- _Версии: Next 15.5.25, React 19.1, Tailwind v4. `output: 'standalone'` включается
+  `NEXT_OUTPUT=standalone` (в Dockerfile) — трассировка standalone создаёт symlink'и,
+  что падает на Windows без dev-mode. Добавлен корневой `.dockerignore`
+  (`**/node_modules` и пр.) — иначе COPY исходников затирал pnpm-инсталляцию в образе
+  хостовыми junction-ссылками и ломал `tsup`._
 
 ### 0.5 Локальная инфраструктура
 - [ ] `docker-compose.yml`: `postgres:16` + `redis:7` (тома, healthchecks, проброс портов).

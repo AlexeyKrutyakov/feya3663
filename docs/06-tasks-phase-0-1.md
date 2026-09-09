@@ -50,12 +50,13 @@ feya/                         # корень, git-репозиторий
 - **DoD:** typecheck + build зелёные ✅; runtime (живая БД) — проверяется в 0.5.
 - _Версии: NestJS 11.1.27, Prisma 7.8.0 (в `@feya/db`). Node 24 LTS._
 
-### 0.4 apps/web (Next.js)
-- [ ] `create-next-app` (App Router, TS, Tailwind) в `apps/web`.
-- [ ] Базовый layout, тема Tailwind, страница-заглушка.
-- [ ] Конфиг env (публичные переменные), клиент API (fetch-обёртка).
-- [ ] `Dockerfile`.
-- **DoD:** стартовая страница рендерится локально и в Docker.
+### 0.4 apps/web (Next.js) ✅ (2026-09-09)
+- [x] `create-next-app` (App Router, TS, Tailwind) в `apps/web`.
+- [x] Базовый layout, тема Tailwind, страница-заглушка.
+- [x] Конфиг env (публичные переменные), клиент API (fetch-обёртка).
+- [x] `Dockerfile`.
+- **DoD:** стартовая страница рендерится локально и в Docker. ✅ (dev-сервер + контейнер,
+  `output: 'standalone'` через `NEXT_OUTPUT=standalone` — обход EPERM-symlink на Windows).
 
 ### 0.5 Локальная инфраструктура
 - [ ] `docker-compose.yml`: `postgres`, `redis` с томами; `.env.example`.
