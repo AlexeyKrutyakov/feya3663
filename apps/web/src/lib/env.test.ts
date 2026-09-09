@@ -27,6 +27,10 @@ describe('webEnvSchema', () => {
     expect(() => webEnvSchema.parse({ NEXT_PUBLIC_API_URL: 'not-a-url' })).toThrow();
   });
 
+  it('rejects a URL without a scheme', () => {
+    expect(() => webEnvSchema.parse({ NEXT_PUBLIC_API_URL: 'api.example.com' })).toThrow();
+  });
+
   it('rejects an empty value', () => {
     expect(() => webEnvSchema.parse({ NEXT_PUBLIC_API_URL: '' })).toThrow();
   });
