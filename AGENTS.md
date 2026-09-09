@@ -91,6 +91,10 @@ pnpm --filter @feya/db db:deploy      # prisma migrate deploy (prod)
   comments.
 - **Git flow:** branches `<type>/<slug>`; one session = one branch = one PR;
   **squash-merge into `main`**. Never commit directly to `main`.
+- **Issue linking:** if the task has a GitHub issue, the PR body must include
+  `Closes #N` (one line per issue) so GitHub auto-closes it on merge. Progress
+  checkboxes in `docs/` are updated in the same PR — docs stay the source of
+  truth, issues are the tracker mirror.
 - **Lint:** unused vars must be prefixed `_` (`argsIgnorePattern: '^_'`).
   `*.prisma` and `**/src/generated/**` are ESLint-ignored.
 - **Formatting:** Prettier (`.prettierrc`, `.prettierignore`); `.editorconfig`
