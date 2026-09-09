@@ -39,9 +39,15 @@ main ──┐
        ├─► создать ветку  <type>/<slug>  от свежего main
        ├─► работа + коммиты (/commit)
        ├─► push ветки, открыть PR в main
+       │     └─ в теле PR: «Closes #N» для каждого закрываемого issue
        ├─► CI на PR: lint / typecheck / test / build
        └─► squash-merge в main  ──►  CI деплой на Beget VPS
 ```
+
+**Правило закрытия issues:** если у задачи есть GitHub-issue, PR обязан содержать
+`Closes #N` (по строке на issue) — тогда GitHub закрывает его автоматически при
+смёрже. Прогресс-чекбоксы в `docs/` обновляются в том же PR. Source of truth по
+прогрессу — `docs/`, issues — зеркало задач в трекере.
 
 ## CI/CD триггеры (GitHub Actions)
 
