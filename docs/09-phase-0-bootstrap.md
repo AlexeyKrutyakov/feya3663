@@ -88,10 +88,17 @@ packages/
   (`**/node_modules` и пр.) — иначе COPY исходников затирал pnpm-инсталляцию в образе
   хостовыми junction-ссылками и ломал `tsup`._
 
-### 0.5 Локальная инфраструктура
-- [ ] `docker-compose.yml`: `postgres:16` + `redis:7` (тома, healthchecks, проброс портов).
-- [ ] `.env.example` (DB URL, REDIS_URL, PORT, NEXT_PUBLIC_API_URL — **без секретов**).
-- **DoD:** `docker compose up` поднимает БД+Redis; `api` подключается, миграция применяется.
+### 0.5 Локальная инфраструктура ✅ (2026-09-09)
+- [x] `docker-compose.yml`: `postgres:16` + `redis:7` (тома, healthchecks, проброс портов;
+      хост-порты настраиваются `POSTGRES_PORT`/`REDIS_PORT`, по умолчанию 5432/6379).
+- [x] `.env.example` (DB URL, REDIS_URL, PORT, NEXT_PUBLIC_API_URL + MIS-переменные с
+      плейсхолдерами — **без секретов**; базовый URL MIS из `docs/10`).
+- [x] Базовая миграция `20260909140725_init` (пустой baseline, таблиц пока нет) + `migration_lock.toml`.
+- [x] `prisma.config.ts`: dotenv теперь читает корневой `.env` монорепо (раньше искал только
+      в `packages/db` и падал без явного `DATABASE_URL`).
+- **DoD:** ✅ `docker compose up` поднимает БД+Redis (healthy); `prisma migrate deploy`
+  применяет миграцию; `api` запущен с корневым `.env` — `GET /health` → `{"status":"ok","db":"ok"}`,
+  `/docs` — 200.
 
 ### 0.6 CI (GitHub Actions) — `.github/workflows/ci.yml`
 - [ ] `pnpm/action-setup` + `actions/setup-node@v4` (Node 22, кэш pnpm-store).

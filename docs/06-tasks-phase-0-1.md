@@ -58,8 +58,8 @@ feya/                         # корень, git-репозиторий
 - **DoD:** стартовая страница рендерится локально и в Docker. ✅ (dev-сервер + контейнер,
   `output: 'standalone'` через `NEXT_OUTPUT=standalone` — обход EPERM-symlink на Windows).
 
-### 0.5 Локальная инфраструктура
-- [ ] `docker-compose.yml`: `postgres`, `redis` с томами; `.env.example`.
+### 0.5 Локальная инфраструктура ✅ (2026-09-09)
+- [x] `docker-compose.yml`: `postgres`, `redis` с томами; `.env.example`.
 - **DoD:** `docker compose up` поднимает БД и Redis; `api` подключается.
 
 ### 0.6 CI (GitHub Actions)
