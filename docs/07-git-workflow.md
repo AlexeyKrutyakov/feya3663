@@ -65,3 +65,53 @@ main ──┐
 ## Версионирование (опционально, позже)
 
 - Семантические теги `vX.Y.Z` на `main` для маркировки релизов/деплоев.
+
+## Сборка Docker-образов в GHCR (0.7, ADR-005)
+
+Job `docker` в `.github/workflows/ci.yml`: матрица `api` / `web`, запуск только
+после успешного job `ci` на `push`→`main`. Пуш в GHCR под именами:
+
+- `ghcr.io/alexeykrutyakov/feya-api:latest` + `:sha` (полный SHA мержа)
+- `ghcr.io/alexeykrutyakov/feya-web:latest` + `:sha`
+
+Аутентификация — `GITHUB_TOKEN` c `permissions: packages: write` (никакие
+секреты реестра настраивать не нужно). Кэш слоёв — GitHub Actions cache
+(`type=gha`, scope на приложение).
+
+**Нюанс `web`:** `NEXT_PUBLIC_*` инлайнятся в бандл при сборке образа. Пока
+production-домена API нет, образ собирается с дефолтом `http://localhost:3001`;
+когда домен появится — задать repository variable `NEXT_PUBLIC_API_URL`
+(Settings → Secrets and variables → Actions → Variables), job подхватит её
+через `vars.NEXT_PUBLIC_API_URL`.
+
+## Секреты CI/деплоя (карта, без значений)
+
+> Значения заполняются в GitHub (Settings → Secrets and variables → Actions)
+> и на VPS перед реальным деплоем (Фаза 7). Здесь — только состав и назначение.
+
+**GitHub Secrets (для CI/деплоя, Phase 7+):**
+
+| Имя | Назначение |
+|-----|------------|
+| `SSH_HOST` / `SSH_USER` | доступ к VPS Beget для deploy-job |
+| `SSH_PRIVATE_KEY` | приватный ключ deploy-ключа для VPS |
+| `DEPLOY_WEBHOOK` (альтернатива SSH) | если Beget предложит webhook-деплой |
+
+Сейчас CI (lint/typecheck/test/build + образы) **не требует** секретов:
+`GITHUB_TOKEN` выдаётся автоматически, `DATABASE_URL` для `prisma generate` —
+заглушка в workflow.
+
+**GitHub Variables (не секреты):**
+
+| Имя | Назначение |
+|-----|------------|
+| `NEXT_PUBLIC_API_URL` | публичный URL API, инлайнится в образ `web` при сборке |
+
+**Рантайм-секреты приложения** (живут на VPS в `.env` / secrets orchestrator,
+не в CI): `DATABASE_URL`, `REDIS_URL`, `MIS_BASE_URL` + логин/пароль
+интегратора MIS, JWT/SMTP-токены. См. `AGENTS.md` → «Where secrets live».
+
+**Доступ к GHCR с VPS (Phase 7):** read-only Personal Access Token (classic,
+scope `read:packages`) для `docker login ghcr.io` на сервере — завести при
+настройке деплоя; пакеты по умолчанию private, токен выдаётся на аккаунт
+с доступом к репозиторию.

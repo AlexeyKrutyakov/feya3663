@@ -110,9 +110,13 @@ packages/
 - **DoD:** ✅ CI зелёный на PR (#19); секретов не требует (Prisma generate без БД,
   env web/api имеют дефолты/валидируются в рантайме).
 
-### 0.7 Заготовка деплоя (ADR-005)
-- [ ] На `push`→main: сборка Docker-образов `api`/`web` и пуш в **GHCR** (`packages: write`).
-- [ ] Документировать требуемые секреты (DB, registry) — значения позже.
+### 0.7 Заготовка деплоя (ADR-005) ✅ (2026-09-10, #20)
+- [x] На `push`→main: сборка Docker-образов `api`/`web` и пуш в **GHCR** (`packages: write`).
+      Job `docker` в `ci.yml` (матрица api/web, `needs: ci`), образы `feya-api`/`feya-web`
+      с тегами `:latest` + `:sha`, кэш слоёв `type=gha`; `NEXT_PUBLIC_API_URL` для образа
+      web — через variable `vars.NEXT_PUBLIC_API_URL` (подробности — docs/07).
+- [x] Документировать требуемые секреты (DB, registry) — значения позже (раздел
+      «Секреты CI/деплоя» в `docs/07-git-workflow.md`).
 - **DoD:** образы собираются в CI (реальный деплой на VPS — Фаза 7).
 
 ### Завершение

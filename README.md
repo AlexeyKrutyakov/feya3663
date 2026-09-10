@@ -119,6 +119,7 @@ apps/
   web/          # Next.js — App Router, Tailwind
 packages/
   shared/       # @feya/shared — Zod-схемы, общие DTO/типы
+  db/           # @feya/db — Prisma-клиент + createPgAdapter()
 docs/           # Планировочные документы, ADR, задачи фаз
 ```
 
@@ -129,7 +130,11 @@ docs/           # Планировочные документы, ADR, задач
 GitHub Actions (`.github/workflows/ci.yml`):
 - триггер: `pull_request` → `main`, `push` → `main`
 - шаги: `install` → `lint` → `typecheck` → `test` → `build`
-- при мерже в `main`: сборка и пуш Docker-образов в GHCR
+- при мерже в `main`: job `docker` собирает образы `api`/`web` и пушит их в GHCR
+  (`ghcr.io/alexeykrutyakov/feya-api` / `feya-web`, теги `latest` + sha) —
+  без дополнительных секретов, через `GITHUB_TOKEN`
+
+Состав секретов CI/деплоя (для Фазы 7) — в `docs/07-git-workflow.md`.
 
 ---
 
