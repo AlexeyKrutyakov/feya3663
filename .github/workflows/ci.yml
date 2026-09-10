@@ -13,6 +13,10 @@ jobs:
   ci:
     name: lint / typecheck / test / build
     runs-on: ubuntu-latest
+    env:
+      # prisma.config.ts resolves DATABASE_URL at config load; prisma generate
+      # never connects to the database, so a placeholder URL is enough in CI.
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
     steps:
       - uses: actions/checkout@v4
 
