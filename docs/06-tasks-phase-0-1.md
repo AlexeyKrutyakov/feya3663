@@ -62,10 +62,10 @@ feya/                         # корень, git-репозиторий
 - [x] `docker-compose.yml`: `postgres`, `redis` с томами; `.env.example`.
 - **DoD:** `docker compose up` поднимает БД и Redis; `api` подключается.
 
-### 0.6 CI (GitHub Actions)
-- [ ] `ci.yml`: setup pnpm + кэш, `install`, `lint`, `typecheck`, `test`, `build` (через Turbo).
-- [ ] Запуск на PR и в основную ветку.
-- **DoD:** CI зелёный на стартовом коммите.
+### 0.6 CI (GitHub Actions) ✅ (2026-09-10, #19)
+- [x] `ci.yml`: setup pnpm + кэш, `install`, `lint`, `typecheck`, `test`, `build` (через Turbo).
+- [x] Запуск на PR и в основную ветку.
+- **DoD:** ✅ CI зелёный на стартовом PR.
 
 ### 0.7 Заготовка деплоя (ADR-005)
 - [ ] Сборка Docker-образов `api`/`web` в CI; пуш в реестр (GHCR).

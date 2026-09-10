@@ -102,11 +102,13 @@ packages/
   применяет миграцию; `api` запущен с корневым `.env` — `GET /health` → `{"status":"ok","db":"ok"}`,
   `/docs` — 200.
 
-### 0.6 CI (GitHub Actions) — `.github/workflows/ci.yml`
-- [ ] `pnpm/action-setup` + `actions/setup-node@v4` (Node 22, кэш pnpm-store).
-- [ ] `install` → `turbo run lint typecheck test build`.
-- [ ] Триггеры: `pull_request`→main и `push`→main.
-- **DoD:** CI зелёный на стартовом PR.
+### 0.6 CI (GitHub Actions) — `.github/workflows/ci.yml` ✅ (2026-09-10)
+- [x] `pnpm/action-setup@v4` + `actions/setup-node@v4` (`node-version-file: .nvmrc`, Node 24,
+      кэш pnpm-store) + отдельный `actions/cache@v4` для `.turbo` (кэш Turbo).
+- [x] `pnpm install --frozen-lockfile` → `pnpm lint` / `typecheck` / `test` / `build` (через Turbo).
+- [x] Триггеры: `pull_request` и `push`→main; `concurrency` отменяет устаревшие прогоны.
+- **DoD:** ✅ CI зелёный на PR (#19); секретов не требует (Prisma generate без БД,
+  env web/api имеют дефолты/валидируются в рантайме).
 
 ### 0.7 Заготовка деплоя (ADR-005)
 - [ ] На `push`→main: сборка Docker-образов `api`/`web` и пуш в **GHCR** (`packages: write`).
